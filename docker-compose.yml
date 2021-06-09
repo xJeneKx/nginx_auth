@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+  nginx:
+    image: docker.io/bitnami/nginx:1.21
+    ports:
+      - '80:8080'
+    volumes:
+      - ./auth.conf:/opt/bitnami/nginx/conf/server_blocks/auth.conf:ro
+    hostname: nginx_auth
+    networks:
+      - backend
+  
+  node: 
+    build: ./node/
+    ports:
+      - '3000:3000'
+    hostname: node_auth
+    networks:
+      - backend
+      
+networks:
+  backend:
+    driver: bridge
